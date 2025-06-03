@@ -94,5 +94,94 @@ const deleteTable = (index: number) => {
 	displayAllMember();
 };
 
+interface Books {
+	title: string;
+	bookIdNumber: string;
+	bookAuthor: string;
+}
+
+//DOM
+const book_title = document.getElementById("bookTitle") as HTMLInputElement;
+const book_Id = document.getElementById("book_number") as HTMLInputElement;
+const book_author = document.getElementById("author") as HTMLInputElement;
+const addBookButton = document.getElementById("addBooks") as HTMLButtonElement;
+const booksTable = document.querySelector(".booksTable tbody") as HTMLTableElement;
+
+// save to localStorage
+let bookArray: Books[] = JSON.parse(localStorage.getItem("bookArray") || "[]");
+
+let bookIndex: number | null = null;
+
+// function to add books
+const addBooks = () => {
+	// create object
+	const books: Books = {
+		title: book_title.value,
+		bookIdNumber: book_Id.value,
+		bookAuthor: book_author.value,
+	};
+	if (!books.title || !books.bookIdNumber || !books.bookAuthor) {
+		alert("Please fill all the required fields");
+		return;
+	}
+	if (bookIndex === null) {
+		if (bookArray.some((item) => item.bookIdNumber === books.bookIdNumber)) {
+			alert("No duplicate for book Identification number!");
+			return;
+		}
+		bookArray.push(books);
+	} else {
+		//update new entry
+		bookArray[bookIndex] = books;
+		bookIndex = null;
+		///////take care here
+	}
+	//store to local storage
+	localStorage.setItem("bookArray", JSON.stringify(bookArray));
+
+	// function to display books available
+	displayAvailableBooks();
+};
+
+const displayAvailableBooks = () => {
+	booksTable.innerHTML = "";
+	bookArray.forEach((item, index) => {
+		const row = document.createElement("tr");
+		row.innerHTML = `
+
+		<td>${item.title}</td>
+		<td>${item.bookIdNumber}</td>
+		<td>${item.bookAuthor}</td>
+		<td><button class="editButtonBtn">Edit</button></td>
+		<td><button class="deleteBookBtn" data-index= '${index}'>Delete</button></td>
+		`;
+		const deleteBookBtn = row.querySelector(".deleteBookBtn") as HTMLButtonElement;
+		deleteBookBtn.addEventListener("click", () => {
+			deleteBook(index);
+		});
+		booksTable.appendChild(row);
+
+		// edit button
+		const editButton = row.querySelector(".editButtonBtn") as HTMLButtonElement;
+		editButton.addEventListener("click", () => {
+			book_title.value = item.title;
+			book_Id.value = item.bookIdNumber;
+			book_author.value = item.bookAuthor;
+			bookIndex = index;
+			addBookButton.textContent = "Update";
+		});
+	});
+};
+
+//delete book function 
+const deleteBook = (index: number) => {
+	bookArray.splice(index, 1);
+	localStorage.setItem('bookArray', JSON.stringify(bookArray));
+	displayAvailableBooks()
+}
+
+addBookButton.addEventListener('click', addBooks);
+displayAvailableBooks();
+
 addMemberButton.addEventListener("click", addMember);
-displayAllMember(); 
+displayAllMember();
