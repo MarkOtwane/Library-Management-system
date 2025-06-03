@@ -28,7 +28,7 @@ const addMember = () => {
 		phone: phone.value,
 		registrationDate: new Date(registerDate.value),
 	};
-	if ((members.fullName || members.email || members.Id_number || members.phone || members.registrationDate) === "") {
+	if (!members.fullName || !members.email || !members.Id_number || !members.phone || !members.registrationDate) {
 		alert("Please fill all the required  fields");
 		return;
 	}
