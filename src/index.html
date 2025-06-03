@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Library Management System</title>
+	</head>
+	<body>
+		<h2>Welcome to the Library Management System</h2>
+		<div id="member">
+			<div class="members">
+				<input
+					type="text"
+					id="name"
+					placeholder="Enter Member Full Name"
+					required
+				/>
+				<input
+					type="email"
+					id="email"
+					placeholder="Enter the Email"
+					required
+				/>
+				<input
+					type="number"
+					id="id_number"
+					placeholder="Enter Id Number"
+					required
+				/>
+				<input
+					type="text"
+					id="phone"
+					placeholder="Enter Phone Number"
+					required
+				/>
+				<input type="date" id="registeration-date" required />
+				<button class="addMember">Add Member</button>
+			</div>
+			<table class="allUsers">
+				<thead>
+					<th>Full Name</th>
+					<th>Email</th>
+					<th>Id Number</th>
+					<th>Phone Number</th>
+					<th>Date</th>
+					<th>Action</th>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+		<div class="books">
+			<div class="enterBooks">
+				<input
+					type="text"
+					id="bookTitle"
+					placeholder="Enter Book Title"
+					required
+				/>
+				<input
+					type="number"
+					id="book_number"
+					placeholder="Enter Book Id Number"
+					required
+				/>
+				<input
+					type="text"
+					id="author"
+					placeholder="Enter the author Name"
+					required
+				/>
+				<button class="addbooks">Add Book</button>
+			</div>
+			<table>
+				<thead>
+					<th>Book Title</th>
+					<th>Book Id Number</th>
+					<th>Author Name</th>
+					<th>Action</th>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</body>
+</html>
