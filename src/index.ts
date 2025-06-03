@@ -32,6 +32,67 @@ const addMember = () => {
 		alert("Please fill all the required  fields");
 		return;
 	}
+
+	if (indexNo === null) {
+		if (membersArray.some((item) => item.Id_number === members.Id_number || item.email === members.email || item.phone === members.phone)) {
+			alert("No duplicate allowed for Id, email and phone number");
+			return;
+		}
+		membersArray.push(members);
+	} else {
+		//update new entry
+		membersArray[indexNo] = members;
+		indexNo = null;
+		addMemberButton.textContent = "Add";
+	}
+	//store data in the local storage
+	localStorage.setItem("memberArrays", JSON.stringify(membersArray));
+	//function to display the users entered
+	displayAllMember();
+};
+
+const displayAllMember = () => {
+	table.innerHTML = "";
+
+	membersArray.forEach((item, index) => {
+		const row = document.createElement("tr");
+		row.innerHTML = `
+			<td>${index + 1}</td>
+			<td>${item.fullName}</td>
+			<td>${item.email}</td>
+			<td>${item.Id_number}</td>
+			<td>${item.phone}</td>
+			<td>${item.registrationDate}</td>
+			<td><button class="editButton">Edit</button></td>
+			<td><button class="deleteButton" data-index= '${index}'>Delete</button></td>
+		`;
+
+		const deleteButton = row.querySelector(".deleteButton") as HTMLButtonElement;
+		deleteButton.addEventListener("click", () => {
+			deleteTable(index);
+		});
+		table.appendChild(row);
+
+		// edit button
+		const editButton = row.querySelector(".editButton") as HTMLButtonElement;
+		editButton.addEventListener("click", () => {
+			fullNameInput.value = item.fullName;
+			email.value = item.email;
+			IdNumber.value = item.Id_number;
+			phone.value = item.phone;
+			registerDate.value = new Date(item.registrationDate).toISOString().split("T")[0];
+			indexNo = index;
+			addMemberButton.textContent = "Update";
+		});
+	});
+};
+
+// delete function
+const deleteTable = (index: number) => {
+	membersArray.splice(index, 1);
+	localStorage.setItem("memberArrays", JSON.stringify(membersArray)); // update storage
+	displayAllMember();
 };
 
 addMemberButton.addEventListener("click", addMember);
+displayAllMember(); 
