@@ -8,6 +8,7 @@
 	<body>
 		<h2>Welcome to the Library Management System</h2>
 		<div id="member">
+			<h2>Members Details</h2>
 			<div class="members">
 				<input
 					type="text"
@@ -49,6 +50,7 @@
 			</table>
 		</div>
 		<div class="books">
+			<h2>Available Books</h2>
 			<div class="enterBooks">
 				<input
 					type="text"
@@ -80,5 +82,36 @@
 				<tbody></tbody>
 			</table>
 		</div>
+
+		<div class="borrowings">
+			<h2>Book Borrowing Details</h2>
+			<div class="borrowingDetails">
+				<input
+					type="number"
+					id="id_number"
+					placeholder="Enter the The Id number"
+					required
+				/>
+				<input
+					type="number"
+					id="book_number"
+					placeholder="Enter The book Number"
+					required
+				/>
+				<input type="date" id="borrow_date" required />
+				<button>Borrow the Book</button>
+			</div>
+			<!-- Display the Member Full name, Name of the book, Date they took the book -->
+			<table class="borrow_Details">
+				<thead>
+					<th>Member Name</th>
+					<th>Book Name</th>
+					<th>Date Borrowed</th>
+					<th>Action</th>
+				</thead>
+			</table>
+		</div>
+
+		<script src="/dist/index.js"></script>
 	</body>
 </html>
