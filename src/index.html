@@ -9,34 +9,14 @@
 		<h2>Welcome to the Library Management System</h2>
 		<div id="member">
 			<h2>Members Details</h2>
-			<div class="members">
-				<input
-					type="text"
-					id="name"
-					placeholder="Enter Member Full Name"
-					required
-				/>
-				<input
-					type="email"
-					id="email"
-					placeholder="Enter the Email"
-					required
-				/>
-				<input
-					type="number"
-					id="id_number"
-					placeholder="Enter Id Number"
-					required
-				/>
-				<input
-					type="text"
-					id="phone"
-					placeholder="Enter Phone Number"
-					required
-				/>
-				<input type="date" id="registeration-date" required />
-				<button class="addMember">Add Member</button>
-			</div>
+			<form class="members">
+				<input type="text" id="name" placeholder="Enter Member Full Name"  />
+				<input type="email" id="email" placeholder="Enter the Email"  />
+				<input type="number" id="id_number" placeholder="Enter Id Number"  />
+				<input type="text" id="phone" placeholder="Enter Phone Number"  />
+				<input type="date" id="registration-date"  />
+				<button id="addMember">Add Member</button>
+			</form>
 			<table class="allUsers">
 				<thead>
 					<th>Full Name</th>
@@ -51,27 +31,12 @@
 		</div>
 		<div class="books">
 			<h2>Available Books</h2>
-			<div class="enterBooks">
-				<input
-					type="text"
-					id="bookTitle"
-					placeholder="Enter Book Title"
-					required
-				/>
-				<input
-					type="number"
-					id="book_number"
-					placeholder="Enter Book Id Number"
-					required
-				/>
-				<input
-					type="text"
-					id="author"
-					placeholder="Enter the author Name"
-					required
-				/>
+			<form action="" class="enterBooks">
+				<input type="text" id="bookTitle" placeholder="Enter Book Title"  />
+				<input type="number" id="book_number" placeholder="Enter Book Id Number"  />
+				<input type="text" id="author" placeholder="Enter the author Name"  />
 				<button class="addbooks">Add Book</button>
-			</div>
+			</form>
 			<table>
 				<thead>
 					<th>Book Title</th>
@@ -86,19 +51,9 @@
 		<div class="borrowings">
 			<h2>Book Borrowing Details</h2>
 			<div class="borrowingDetails">
-				<input
-					type="number"
-					id="id_number"
-					placeholder="Enter the The Id number"
-					required
-				/>
-				<input
-					type="number"
-					id="book_number"
-					placeholder="Enter The book Number"
-					required
-				/>
-				<input type="date" id="borrow_date" required />
+				<input type="number" id="id_number" placeholder="Enter the The Id number"  />
+				<input type="number" id="book_number" placeholder="Enter The book Number"  />
+				<input type="date" id="borrow_date"  />
 				<button>Borrow the Book</button>
 			</div>
 			<!-- Display the Member Full name, Name of the book, Date they took the book -->
