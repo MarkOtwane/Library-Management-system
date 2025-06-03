@@ -16,7 +16,7 @@ const addMemberButton = document.getElementById("addMember") as HTMLButtonElemen
 const table = document.querySelector(".allUsers tbody")!;
 
 // localStorage save member details
-let membersArray: Members[] = JSON.parse(localStorage.getItem("memberArray") || "[]");
+let membersArray: Members[] = JSON.parse(localStorage.getItem("membersArray") || "[]");
 
 let indexNo: number | null = null;
 // Function add members
@@ -46,7 +46,7 @@ const addMember = () => {
 		addMemberButton.textContent = "Add";
 	}
 	//store data in the local storage
-	localStorage.setItem("memberArrays", JSON.stringify(membersArray));
+	localStorage.setItem("membersArray", JSON.stringify(membersArray));
 	//function to display the users entered
 	displayAllMember();
 };
@@ -57,7 +57,7 @@ const displayAllMember = () => {
 	membersArray.forEach((item, index) => {
 		const row = document.createElement("tr");
 		row.innerHTML = `
-			<td>${index + 1}</td>
+			<!-- <td>${index + 1}</td> -->
 			<td>${item.fullName}</td>
 			<td>${item.email}</td>
 			<td>${item.Id_number}</td>
@@ -80,7 +80,7 @@ const displayAllMember = () => {
 			email.value = item.email;
 			IdNumber.value = item.Id_number;
 			phone.value = item.phone;
-			registerDate.value = new Date(item.registrationDate).toISOString().split("T")[0];
+			registerDate.value = new Date(item.registrationDate).toString();
 			indexNo = index;
 			addMemberButton.textContent = "Update";
 		});
@@ -90,7 +90,7 @@ const displayAllMember = () => {
 // delete function
 const deleteTable = (index: number) => {
 	membersArray.splice(index, 1);
-	localStorage.setItem("memberArrays", JSON.stringify(membersArray)); // update storage
+	localStorage.setItem("membersArray", JSON.stringify(membersArray)); // update storage
 	displayAllMember();
 };
 
