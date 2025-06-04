@@ -173,14 +173,81 @@ const displayAvailableBooks = () => {
 	});
 };
 
-//delete book function 
+//delete book function
 const deleteBook = (index: number) => {
 	bookArray.splice(index, 1);
-	localStorage.setItem('bookArray', JSON.stringify(bookArray));
-	displayAvailableBooks()
-}
+	localStorage.setItem("bookArray", JSON.stringify(bookArray));
+	displayAvailableBooks();
+};
 
-addBookButton.addEventListener('click', addBooks);
+type BorrowedBooksReturn = Members & Books;
+
+let returnBooks: BorrowedBooksReturn[] = JSON.parse(localStorage.getItem("returnBooks") || "[]");
+let returnBookIndex: number | null = null;
+
+const borrowBookButton = document.getElementById("borrowBook") as HTMLButtonElement;
+const borrowersTable = document.querySelector(".borrow_details tbody");
+
+const borrowBooks = () => {
+	const borrowBooksReturn: BorrowedBooksReturn = {
+		fullName: fullNameInput.value,
+		email: email.value,
+		Id_number: IdNumber.value,
+		phone: phone.value,
+		registrationDate: new Date(registerDate.value),
+		title: book_title.value,
+		bookIdNumber: book_Id.value,
+		bookAuthor: book_author.value,
+	};
+	if (!borrowBooksReturn) {
+		alert("No empty fields allowed");
+		return;
+	}
+
+	if (returnBookIndex === null) {
+		if (returnBooks.some((item) => item.bookIdNumber === borrowBooksReturn.bookIdNumber)) {
+			alert("This Book is borrowed by another member");
+			return;
+		}
+		returnBooks.push(borrowBooksReturn);
+	} else {
+		// update new books
+		returnBooks[returnBookIndex] = borrowBooksReturn;
+		returnBookIndex = null;
+	}
+	//store data in the localStorage
+	localStorage.setItem("returnBooks", JSON.stringify(returnBooks));
+
+	// function to display borrowers of books
+	displayAllBorrowers();
+};
+
+const displayAllBorrowers = () => {
+	if (borrowersTable) {
+		borrowersTable.innerHTML = "";
+
+		returnBooks.forEach((item, index) => {
+			const row = document.createElement("tr");
+			row.innerHTML = `
+			<td>${item.fullName}</td>
+			<td>${item.title}</td>
+			<td>${item.registrationDate}</td>
+			<td><button class="editReturn">Edit</button></td>
+			<td><button class="returnButton" data-index= '${index}'>Return Book</button></td>
+			`;
+
+			const returnBookButton = row.querySelector(".returnButton") as HTMLButtonElement;
+			returnBookButton.addEventListener('click', () => { 
+				returnBookFunction(item);
+			});
+			borrowersTable.appendChild(row);
+
+			//edit button
+		});
+	}
+};
+
+addBookButton.addEventListener("click", addBooks);
 displayAvailableBooks();
 
 addMemberButton.addEventListener("click", addMember);
