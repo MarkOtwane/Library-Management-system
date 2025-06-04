@@ -8,9 +8,9 @@ interface Members {
 
 // DOM ELEMENTS
 const fullNameInput = document.getElementById("name") as HTMLInputElement;
-const email = document.getElementById("email") as HTMLInputElement;
+const emailInput = document.getElementById("email") as HTMLInputElement;
 const IdNumber = document.getElementById("id_number") as HTMLInputElement;
-const phone = document.getElementById("phone") as HTMLInputElement;
+const phoneInput = document.getElementById("phone") as HTMLInputElement;
 const registerDate = document.getElementById("registration-date") as HTMLInputElement;
 const addMemberButton = document.getElementById("addMember") as HTMLButtonElement;
 const table = document.querySelector(".allUsers tbody")!;
@@ -23,9 +23,9 @@ let indexNo: number | null = null;
 const addMember = () => {
 	const members: Members = {
 		fullName: fullNameInput.value,
-		email: email.value,
+		email: emailInput.value,
 		Id_number: IdNumber.value,
-		phone: phone.value,
+		phone: phoneInput.value,
 		registrationDate: new Date(registerDate.value),
 	};
 	if (!members.fullName || !members.email || !members.Id_number || !members.phone || !members.registrationDate) {
@@ -77,9 +77,9 @@ const displayAllMember = () => {
 		const editButton = row.querySelector(".editButton") as HTMLButtonElement;
 		editButton.addEventListener("click", () => {
 			fullNameInput.value = item.fullName;
-			email.value = item.email;
+			emailInput.value = item.email;
 			IdNumber.value = item.Id_number;
-			phone.value = item.phone;
+			phoneInput.value = item.phone;
 			registerDate.value = new Date(item.registrationDate).toString();
 			indexNo = index;
 			addMemberButton.textContent = "Update";
@@ -191,15 +191,16 @@ const borrowersTable = document.querySelector(".borrow_details tbody");
 const borrowBooks = () => {
 	const borrowBooksReturn: BorrowedBooksReturn = {
 		fullName: fullNameInput.value,
-		email: email.value,
+		email: emailInput.value,
 		Id_number: IdNumber.value,
-		phone: phone.value,
+		phone: phoneInput.value,
 		registrationDate: new Date(registerDate.value),
 		title: book_title.value,
 		bookIdNumber: book_Id.value,
 		bookAuthor: book_author.value,
 	};
-	if (!borrowBooksReturn) {
+	const { fullName, email, Id_number, phone, registrationDate, title, bookIdNumber, bookAuthor } = borrowBooksReturn;
+	if (!fullName || !email || !Id_number || !phone || !registrationDate || !title || !bookIdNumber || !bookAuthor) {
 		alert("No empty fields allowed");
 		return;
 	}
@@ -237,15 +238,34 @@ const displayAllBorrowers = () => {
 			`;
 
 			const returnBookButton = row.querySelector(".returnButton") as HTMLButtonElement;
-			returnBookButton.addEventListener('click', () => { 
-				returnBookFunction(item);
+			returnBookButton.addEventListener("click", () => {
+				returnBookFunction(index);
 			});
 			borrowersTable.appendChild(row);
 
 			//edit button
+
+			const editReturn = row.querySelector(".editReturn") as HTMLButtonElement;
+			editReturn.addEventListener("click", () => {
+				fullNameInput.value = item.fullName;
+				book_title.value = item.title;
+				registerDate.value = new Date(item.registrationDate).toString();
+				returnBookIndex = index;
+				borrowBookButton.textContent = "Update";
+			});
 		});
 	}
 };
+
+// delete function
+const returnBookFunction = (index: number) => {
+	returnBooks.splice(index, 1);
+	localStorage.setItem("returnBooks", JSON.stringify(returnBooks)); // update storage
+	displayAllBorrowers();
+};
+
+borrowBookButton.addEventListener("click", borrowBooks);
+displayAllBorrowers();
 
 addBookButton.addEventListener("click", addBooks);
 displayAvailableBooks();
