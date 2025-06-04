@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Library Management System</title>
+		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
 		<h2>Welcome to the Library Management System</h2>
@@ -51,8 +52,8 @@
 		<div class="borrowings">
 			<h2>Book Borrowing Details</h2>
 			<div class="borrowingDetails">
-				<input type="number" id="id_number" placeholder="Enter the the User Id number" />
-				<input type="number" id="book_number" placeholder="Enter The book Number" />
+				<input type="number" id="borrower_id_number" placeholder="Enter the User Id number" />
+				<input type="number" id="borrow_book_number" placeholder="Enter the Book Number" />
 				<input type="date" id="borrow_date" />
 				<button id="borrowBook">Borrow the Book</button>
 			</div>
@@ -66,7 +67,7 @@
 				</thead>
 				<tbody></tbody>
 			</table>
-		</div>
+		</div>		
 
 		<script src="/dist/index.js"></script>
 	</body>
